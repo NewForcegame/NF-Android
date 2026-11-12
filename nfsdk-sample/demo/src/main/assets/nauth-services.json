@@ -1,0 +1,9 @@
+{
+  "client_id": "b18tiennghich",
+  "af_app_id": "",
+  "af_dev_key": "VeE9A6uoCqwcNREh8AcZjc",
+  "sdk_language": "en",
+  "only_quick_login": "no",
+  "fone_verify_auto": "no",
+  "show": ["fb", "gg", "quick"]
+}

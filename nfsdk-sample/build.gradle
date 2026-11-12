@@ -1,0 +1,13 @@
+// NFsdk Android — xem docs/DESIGN.md
+plugins {
+    id 'com.android.library' version '8.13.1' apply false
+    id 'com.android.application' version '8.13.1' apply false
+}
+
+ext {
+    nfsdkVersion = '5.0.0'
+    nfsdkVersionCode = 10
+    compileSdk = 36
+    minSdk = 24          // DESIGN Q22
+    targetSdk = 35
+}

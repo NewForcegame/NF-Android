@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "162374586826",
+    "project_id": "b18tiennghich",
+    "storage_bucket": "b18tiennghich.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162374586826:android:9cc131150cb90717e27f33",
+        "android_client_info": {
+          "package_name": "com.nfsdk.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162374586826-g3tim3b2r05a5te1u3risutq0ti7nb2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJA7GjyJez48x9KmmrHZ7IEhXWpiHBTc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162374586826-g3tim3b2r05a5te1u3risutq0ti7nb2q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "162374586826-qni0bullbltje6iv5g927iq0tvua4ksb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nfsdk.demo.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

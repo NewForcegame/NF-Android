@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NFsdk Demo</string>
+    <!-- Facebook (game test) -->
+    <string name="facebook_app_id">1572805863710367</string>
+    <string name="fb_login_protocol_scheme">fb1572805863710367</string>
+    <string name="facebook_client_token">64df5e19b41098b39737a5aa8c090cdf</string>
+</resources>
