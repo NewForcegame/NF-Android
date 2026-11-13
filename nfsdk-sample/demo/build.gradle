@@ -7,7 +7,6 @@ android {
     compileSdk rootProject.ext.compileSdk
 
     defaultConfig {
-        // applicationId của game test — đổi theo game thật
         applicationId 'com.nfsdk.demo'
         minSdk rootProject.ext.minSdk
         targetSdk rootProject.ext.targetSdk
@@ -30,14 +29,12 @@ android {
 
 dependencies {
     implementation files('libs/nfsdk-1.0.1.aar')
-    // .aar trần không kéo phụ thuộc bắc cầu ⇒ thêm tay phụ thuộc bắt buộc của SDK
     implementation 'androidx.webkit:webkit:1.12.1'
     implementation 'androidx.annotation:annotation:1.9.1'
 
     implementation 'com.android.billingclient:billing:9.1.0'
     implementation 'com.appsflyer:af-android-sdk:6.18.1'
     implementation 'com.android.installreferrer:installreferrer:2.2'
-    implementation 'com.facebook.android:facebook-login:19.0.1'
     implementation 'androidx.credentials:credentials:1.6.0'
     implementation 'androidx.credentials:credentials-play-services-auth:1.5.0'
     implementation 'com.google.android.libraries.identity.googleid:googleid:1.1.1'
