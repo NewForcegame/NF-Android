@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     private TextView account;
     private GridLayout grid;
     // giá trị nhập lần trước trong hộp thoại payment
-    private String lastProductId = "com.joyplay.pack1";
+    private String lastProductId = "com.nfsdk.demo.pack1";
     private String lastAmount = "25000";
 
     private final UserListener userListener = new UserListener() {
