@@ -290,7 +290,7 @@ Local maintenance switch (does not affect server maintenance): `NFsdk.getInstanc
 
 ```java
 ProductObject productObject = new ProductObject();
-productObject.productId = "com.joyplay.pack1";
+productObject.productId = "com.nfsdk.demo.pack1";
 productObject.productName = "package 1";
 productObject.orderId = gameOrderId;
 productObject.amount = "25000";
@@ -396,7 +396,7 @@ adb install -r demo/build/outputs/apk/debug/demo-debug.apk
 
 - Before sign-in the demo shows a single **Sign in** button; after sign-in it shows account info and the API buttons
   (enter game, payment, logout, test maintenance 10s, tracking, toPage …).
-- Demo app id: `com.joyplay.tiennghich` (test game) — change it in `demo/build.gradle` for your own game.
+- Demo app id: `com.nfsdk.demo` (test game) — change it in `demo/build.gradle` for your own game.
 - Debug log: filter Logcat by tag `NFsdk` (`"nfsdk_debug": true` for verbose logs).
 
 ## **Important Information**
