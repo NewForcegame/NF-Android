@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,15 +31,11 @@ import com.nfsdk.ProductObject;
 import com.nfsdk.TriggerEnumType;
 import com.nfsdk.UserListener;
 
-/** Demo NFsdk: mỗi nút gọi 1 API public. Kết quả callback hiện ở khung log. */
 public class MainActivity extends Activity {
-    private TextView log;
     private ScrollView pageScroll;
-    // chưa đăng nhập ⇒ chỉ nút "Sign in"; đăng nhập xong ⇒ thông tin tài khoản + các nút API
     private Button loginBtn;
     private TextView account;
     private GridLayout grid;
-    // giá trị nhập lần trước trong hộp thoại payment
     private String lastProductId = "com.nfsdk.demo.pack1";
     private String lastAmount = "25000";
 
@@ -66,7 +63,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (BuildConfig.DEBUG) {
-            // phát hiện I/O / mạng trên main do SDK gây ra
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectNetwork().penaltyLog().build());
         }
         LinearLayout col = new LinearLayout(this);
@@ -78,7 +74,6 @@ public class MainActivity extends Activity {
         title.setTextSize(18);
         col.addView(title);
 
-        // Chưa đăng nhập: chỉ 1 nút "Sign in"
         loginBtn = new Button(this);
         loginBtn.setAllCaps(false);
         loginBtn.setText("Sign in");
@@ -89,7 +84,6 @@ public class MainActivity extends Activity {
         loginLp.topMargin = p;
         col.addView(loginBtn, loginLp);
 
-        // Đã đăng nhập: thông tin tài khoản + các nút API
         account = new TextView(this);
         account.setTextSize(14);
         account.setTextColor(Color.parseColor("#1C1C1E"));
@@ -104,16 +98,13 @@ public class MainActivity extends Activity {
         accLp.bottomMargin = p / 2;
         col.addView(account, accLp);
 
-        // Các nút API xếp lưới 2 cột cho gọn
         grid = new GridLayout(this);
         grid.setColumnCount(2);
         col.addView(grid, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        // "enter game" = kiểm bảo trì trước khi vào game (dialog().maintenance): không bảo trì ⇒ onOpen
         btn(grid, "enter game", v -> NFsdk.dialog().maintenance(this, () -> {
             print("enter game ⇒ onOpen (no maintenance)");
-            // chữ của demo viết cứng — demo độc lập, không dùng ngôn ngữ của SDK
             new AlertDialog.Builder(this)
                     .setTitle("Enter game")
                     .setMessage("Entered the game successfully.")
@@ -128,42 +119,21 @@ public class MainActivity extends Activity {
             NFsdk.getInstance().setMaintenance(true);
             print("setMaintenance(true)");
         });*/
-        btn(grid, "test maintenance 10s", v -> { // true ⇒ maintenance ⇒ 10s ⇒ false (đóng trang)
+        /*btn(grid, "test maintenance 10s", v -> { // true ⇒ maintenance ⇒ 10s ⇒ false (đóng trang)
             NFsdk.getInstance().setMaintenance(true);
             NFsdk.dialog().maintenance(this, () -> print("maintenance ⇒ onOpen"));
             v.postDelayed(() -> {
                 NFsdk.getInstance().setMaintenance(false);
                 print("setMaintenance(false) after 10s");
             }, 10000);
-        });
+        });*/
         btn(grid, "tracking (all events)", v -> trackAll());
-        btn(grid, "toPage FANPAGE", v -> NFsdk.toPage(this, PageType.FB_FANPAGE, () -> print("toPage ⇒ onCompleted")));
-        btn(grid, "toPage GROUP", v -> NFsdk.toPage(this, PageType.FB_GROUP, () -> print("toPage ⇒ onCompleted")));
+        //btn(grid, "toPage FANPAGE", v -> NFsdk.toPage(this, PageType.FB_FANPAGE, () -> print("toPage ⇒ onCompleted")));
+        //btn(grid, "toPage GROUP", v -> NFsdk.toPage(this, PageType.FB_GROUP, () -> print("toPage ⇒ onCompleted")));
         btn(grid, "toPage APP_PAGE", v -> NFsdk.toPage(this, PageType.APP_PAGE, () -> print("toPage ⇒ onCompleted")));
         btn(grid, "toPage REVIEW", v -> NFsdk.toPage(this, PageType.REVIEW, () -> print("toPage ⇒ onCompleted")));
 
-        // Khung log bên dưới các nút, mới nhất ở trên; cả màn (nút + log) cuộn chung ⇒ màn ngang vẫn xem đủ
-        TextView logTitle = new TextView(this);
-        logTitle.setText("Log");
-        logTitle.setTextSize(13);
-        logTitle.setTextColor(Color.GRAY);
-        logTitle.setPadding(0, p, 0, p / 3);
-        col.addView(logTitle);
-        log = new TextView(this);
-        log.setTextSize(12);
-        log.setTextColor(Color.DKGRAY);
-        log.setTextIsSelectable(true);
-        log.setPadding(p, p, p, p);
-        log.setMinHeight(p * 14);
-        GradientDrawable box = new GradientDrawable();
-        box.setColor(Color.WHITE);
-        box.setCornerRadius(p * 0.7f);
-        box.setStroke(Math.max(1, p / 12), Color.parseColor("#D6D6DC"));
-        log.setBackground(box);
-        col.addView(log, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        pageScroll = new ScrollView(this);
+                pageScroll = new ScrollView(this);
         pageScroll.setFillViewport(true);
         pageScroll.setVerticalScrollBarEnabled(true);
         pageScroll.addView(col);
@@ -295,9 +265,6 @@ public class MainActivity extends Activity {
     }
 
     private void print(final String s) {
-        runOnUiThread(() -> {
-            String time = new SimpleDateFormat("HH:mm:ss", Locale.ROOT).format(new Date());
-            log.setText(time + "  " + s + "\n" + log.getText()); // mới nhất ở trên; không tự cuộn trang
-        });
+        Log.d("demo", s);
     }
 }

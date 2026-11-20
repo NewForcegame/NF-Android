@@ -81,8 +81,6 @@ dependencies {
     // appsflyer
     implementation 'com.appsflyer:af-android-sdk:6.18.1'
     implementation 'com.android.installreferrer:installreferrer:2.2'
-    // facebook login — use a FIXED version, not latest.release
-    implementation 'com.facebook.android:facebook-login:19.0.1'
     // google sign-in (Credential Manager)
     implementation 'androidx.credentials:credentials:1.6.0'
     implementation 'androidx.credentials:credentials-play-services-auth:1.5.0'
@@ -103,43 +101,11 @@ dependencies {
 The SDK manifest already declares (merged automatically): `INTERNET`, `ACCESS_NETWORK_STATE`, `com.android.vending.BILLING`,
 the social-login activity, the web-payment activity and the FCM service (low priority — if the game has its own FCM service, the game's one is used).
 
-The game only adds the Facebook meta-data:
-
-```xml
-<application
-    android:allowBackup="false"
-    tools:replace="android:allowBackup"
-    ...>
-
-    <meta-data android:name="com.facebook.sdk.ApplicationId"
-        android:value="@string/facebook_app_id" />
-    <meta-data android:name="com.facebook.sdk.ClientToken"
-        android:value="@string/facebook_client_token" />
-</application>
-```
-
 - AppsFlyer declares `android:allowBackup="true"`; if the game sets `false`, add `tools:replace="android:allowBackup"` (as in the sample).
 - If the game uses `fullBackupContent` / `dataExtractionRules`, exclude the SDK session:
   `<exclude domain="sharedpref" path="com.nfsdk.sdk.xml"/>`.
 
-### **3. Update strings.xml Configuration**
-<b>Replace FACEBOOK_APP_ID and FACEBOOK_CLIENT_TOKEN with actual values:</b>
-```xml
-<resources>
-    <string name="app_name">NFsdk Demo</string>
-
-    <!-- Facebook App ID (Required for Facebook Login) -->
-    <string name="facebook_app_id" translatable="false">FACEBOOK_APP_ID</string>
-
-    <!-- Facebook Login Protocol Scheme: fb<facebook_app_id> -->
-    <string name="fb_login_protocol_scheme" translatable="false">fbFACEBOOK_APP_ID</string>
-
-    <!-- Facebook Client Token (Required for API Calls) -->
-    <string name="facebook_client_token" translatable="false">FACEBOOK_CLIENT_TOKEN</string>
-</resources>
-```
-
-### **4. nauth-services.json**
+### **3. nauth-services.json**
 
 `app/src/main/assets/nauth-services.json`:
 
@@ -149,7 +115,7 @@ The game only adds the Facebook meta-data:
   "af_app_id": "<package name>",
   "af_dev_key": "<AppsFlyer dev key>",
   "sdk_language": "en",
-  "show": ["fb", "gg", "quick"]
+  "show": ["gg", "quick"]
 }
 ```
 
@@ -158,7 +124,7 @@ The game only adds the Facebook meta-data:
 | `client_id` | Product id registered on the NFsdk server (**required**) |
 | `af_dev_key` / `af_app_id` | AppsFlyer configuration |
 | `sdk_language` | `en` / `vi`. Empty ⇒ **English** (the SDK does not follow the device language) |
-| `show` | Login buttons: `fb` (Facebook), `gg` (Google), `quick` (guest) |
+| `show` | Login buttons: `gg` (Google), `quick` (guest) |
 
 ## **Development**
 
@@ -377,8 +343,6 @@ try {
 
 ## **5. WebPage Interface**
 ```java
-PageType.FB_FANPAGE
-PageType.FB_GROUP
 PageType.APP_PAGE
 PageType.REVIEW
 NFsdk.toPage(this, PageType.REVIEW, () -> {
